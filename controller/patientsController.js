@@ -106,6 +106,12 @@ const UpdatePatients = async(req,res)=>{
                 message:'invalid Id or provide Id'
             })
         }
+        if (!Object.keys(req.body).length) {
+            return res.status(400).send({
+                success: false,
+                message: 'Request body cannot be empty'
+            });
+        }
         const {FirstName,LastName,DateOfBirth,Gender,Address,PhoneNumber,Email,EmergencyContact}=req.body
         const data = await mySqlPool.query(`UPDATE Patient SET FirstName = ?,LastName = ?,DateOfBirth =?,Gender =? ,Address = ?,PhoneNumber =? ,Email = ?,EmergencyContact = ? WHERE Patient_Id=?`,[FirstName,LastName,DateOfBirth,Gender,Address,PhoneNumber,Email,EmergencyContact,PatientId])
         if(!data){
